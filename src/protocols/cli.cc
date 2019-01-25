@@ -37,9 +37,9 @@ bool RenjuProtocolCLI::beginSession(int argc, char const *argv[]) {
     }
 
     // Initialize arguments
-    g_board_size = 19;
+    g_board_size = 15;
     g_gs_size = (unsigned int)g_board_size * g_board_size;
-    char gs_string[362] = {0};
+    char gs_string[226] = {0};
     int ai_player = 1;
     int num_threads = 1;
     int search_depth = -1;
@@ -54,8 +54,8 @@ bool RenjuProtocolCLI::beginSession(int argc, char const *argv[]) {
             if (i >= argc - 1) continue;
 
             // Validate and copy state
-            if (validateString(argv[i + 1], 361) == 361)
-                memcpy(gs_string, argv[i + 1], 361);
+            if (validateString(argv[i + 1], 225) == 225)
+                memcpy(gs_string, argv[i + 1], 225);
 
         } else if (strncmp(arg, "-p", 2) == 0) {
             // AI player ID
@@ -79,7 +79,7 @@ bool RenjuProtocolCLI::beginSession(int argc, char const *argv[]) {
 
         } else if (strncmp(arg, "test", 4) == 0) {
             // Build test data
-            memcpy(gs_string, "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002121000000000000001211112000000000000022122110000000000001211002200000000000002010200000000000000000200000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000", 362);
+            memcpy(gs_string, "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002121000000000012111120000000002212211000000001211002200000000020102000000000000020000000000000100000", 226);
             search_depth = 8;
             ai_player = 2;
         }
