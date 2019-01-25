@@ -1,40 +1,31 @@
-# Build container
-FROM alpine
+# Build stage
+FROM alpine AS build
 
-# Install build-time packages
-RUN apk --no-cache add nginx alpine-sdk cmake bash
-
-# Set workdir
 WORKDIR /app/build
 
-# Copy code
+RUN apk add --no-cache alpine-sdk cmake
+
 COPY . /app
 
-# Build program then remove building toolchain
-RUN cmake .. && \
-    make install && \
-    apk del --no-cache alpine-sdk cmake
+RUN cmake .. && make install
 
-# Runtime container
-FROM node:8-alpine
+# Final stage
+FROM node:lts-alpine AS final
 
-# Install nginx
-RUN apk --no-cache add nginx
+WORKDIR /app
 
-# Copy nginx configuration
+RUN apk add --no-cache nginx
+
 COPY docker-nginx.conf /etc/nginx/nginx.conf
 
-# Copy built binary from build container
-COPY --from=0 /app/build/gomoku /bin/gomoku
+COPY --from=build /app/build/gomoku /bin/gomoku
 
-# Copy code
-COPY . /app
+COPY gui/server/package.json gui/server/
 
-# Install node.js dependencies
-RUN cd /app/gui/server && npm install
+RUN cd gui/server && npm install --production
 
-# nginx listens on 8000
-EXPOSE 8000
+COPY . .
 
-# Set command
-CMD ["/app/docker-start.sh"]
+EXPOSE 8000 8001
+
+CMD ["/app/scripts/docker-start.sh"]

@@ -16,10 +16,7 @@ Run Your Own Copy
 -----
 - Make sure you have access to `docker`.
 
-- Run:
-  ```
-  ./build-n-run.sh
-  ```
+- Run `scripts/build.sh` and then `scripts/run.sh`.
 
 - Access `http://localhost:8000` in your browser.
 
