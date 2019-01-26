@@ -5,7 +5,11 @@ WORKDIR /app/build
 
 RUN apk add --no-cache alpine-sdk cmake
 
-COPY . /app
+COPY include /app/include
+
+COPY src /app/src
+
+COPY CMakeLists.txt /app
 
 RUN cmake .. && make install
 
@@ -20,12 +24,12 @@ COPY docker-nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /app/build/gomoku /bin/gomoku
 
-COPY gui/server/package.json gui/server/
+COPY gui/server/package.json .
 
-RUN cd gui/server && npm install --production
+RUN npm install --production
 
-COPY . .
+COPY gui/server scripts/docker-start.sh ./
 
-EXPOSE 8000 8001
+EXPOSE 3500
 
-CMD ["/app/scripts/docker-start.sh"]
+CMD ["./docker-start.sh"]

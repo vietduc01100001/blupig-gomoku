@@ -1,3 +1,3 @@
 #!/bin/sh
-docker stop gomoku
-docker run -d --rm -p 8000:8000 -p 8001:8001 -e SERVER_URI="http://localhost:8001" --name gomoku gomoku
+docker stop gomoku-server
+docker run -d -p "$1":3500 --name gomoku-server gomoku-server

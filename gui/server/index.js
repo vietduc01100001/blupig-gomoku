@@ -13,8 +13,8 @@ function start() {
   app.get('/status', (req, res) => res.send('ok'));
 
   app.get('/move', (req, res) => {
-    const state = req.query.s.trim();
-    const player = req.query.p.trim();
+    const state = req.query.s ? req.query.s.trim() : '';
+    const player = req.query.p ? req.query.s.trim() : '';
 
     let cmd = 'gomoku';
     if (state && state.length > 0) cmd += ' -s ' + state;
@@ -27,5 +27,5 @@ function start() {
     });
   });
 
-  app.listen(8001);
+  app.listen(3500);
 }

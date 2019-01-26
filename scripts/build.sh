@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t gomoku .
+docker build -t gomoku-server .

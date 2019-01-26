@@ -1,13 +1,9 @@
 .git/
 **/node_modules/
-gui/screenshots/
-profiling/
 scripts/
-tests/
 .idea/
 .*ignore
 *.md
 LICENSE
 Dockerfile
-.travis.yml
 !scripts/docker-start.sh
