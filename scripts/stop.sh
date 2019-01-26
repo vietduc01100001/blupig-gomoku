@@ -1,2 +1,3 @@
 #!/bin/sh
-docker stop gomoku
+docker stop gomoku && \
+docker rm gomoku
